@@ -1,0 +1,22 @@
+# Build artifacts
+**/target/
+**/node_modules/
+**/dist/
+
+# IDE files
+**/.classpath
+**/.project
+**/.settings/
+**/.idea/
+**/*.iml
+**/.vscode/
+
+# SQLite databases
+**/*.db
+
+# Logs
+**/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
