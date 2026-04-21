@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:customer-service.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+server:
+  port: 8082
+
+jwt:
+  secret: ${JWT_SECRET:OrderManagerMicroservicesSharedJwtSecret2026!}
