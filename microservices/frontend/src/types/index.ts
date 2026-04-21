@@ -30,11 +30,14 @@ export interface Product {
 }
 
 export interface OrderItem {
+  id?: number;
   productId: number;
   productName?: string;
   quantity: number;
   unitPrice?: number;
   totalPrice?: number;
+  lineTotal?: number;
+  product?: Product;
 }
 
 export interface Order {
@@ -44,18 +47,21 @@ export interface Order {
   orderDate: string;
   status: string;
   totalAmount: number;
+  shippingAddress?: string;
   items?: OrderItem[];
+  customer?: Customer;
 }
 
 export interface InventoryItem {
   id: number;
   productId: number;
   productName?: string;
-  sku: string;
+  sku?: string;
   quantityOnHand: number;
   reorderLevel: number;
   warehouseLocation: string;
   lastRestocked: string;
+  product?: Product;
 }
 
 export interface User {

@@ -30,7 +30,7 @@ function InventoryPage() {
 
   const openRestockModal = (item: InventoryItem) => {
     setRestockProductId(item.productId);
-    setRestockProductName(item.productName || item.sku);
+    setRestockProductName(item.product?.name || item.productName || item.product?.sku || item.sku || '');
     setRestockQuantity(0);
     setShowRestockModal(true);
   };
@@ -82,8 +82,8 @@ function InventoryPage() {
             const isLowStock = item.quantityOnHand <= item.reorderLevel;
             return (
               <tr key={item.id} className={isLowStock ? 'table-danger' : ''}>
-                <td>{item.productName || '-'}</td>
-                <td>{item.sku}</td>
+                <td>{item.product?.name || item.productName || '-'}</td>
+                <td>{item.product?.sku || item.sku || '-'}</td>
                 <td>{item.quantityOnHand}</td>
                 <td>{item.reorderLevel}</td>
                 <td>{item.warehouseLocation}</td>

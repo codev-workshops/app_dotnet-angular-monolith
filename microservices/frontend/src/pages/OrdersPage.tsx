@@ -137,7 +137,7 @@ function OrdersPage() {
           {orders.map((o) => (
             <tr key={o.id}>
               <td>{o.id}</td>
-              <td>{o.customerName || o.customerId}</td>
+              <td>{o.customer?.name || o.customerName || o.customerId}</td>
               <td>{new Date(o.orderDate).toLocaleDateString()}</td>
               <td>{getStatusBadge(o.status)}</td>
               <td>${o.totalAmount.toFixed(2)}</td>
