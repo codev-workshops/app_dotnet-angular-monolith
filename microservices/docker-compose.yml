@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - auth-service
+      - customer-service
+      - product-service
+      - order-service
+      - inventory-service
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=OrderManagerMicroservicesSharedJwtSecret2026!
+      - SERVER_PORT=8081
+
+  customer-service:
+    build: ./customer-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=OrderManagerMicroservicesSharedJwtSecret2026!
+      - SERVER_PORT=8082
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=OrderManagerMicroservicesSharedJwtSecret2026!
+      - SERVER_PORT=8083
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=OrderManagerMicroservicesSharedJwtSecret2026!
+      - SERVER_PORT=8084
+      - CUSTOMER_SERVICE_URL=http://customer-service:8082
+      - PRODUCT_SERVICE_URL=http://product-service:8083
+
+  inventory-service:
+    build: ./inventory-service
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=OrderManagerMicroservicesSharedJwtSecret2026!
+      - SERVER_PORT=8085
+      - PRODUCT_SERVICE_URL=http://product-service:8083
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api-gateway
