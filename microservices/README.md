@@ -93,6 +93,16 @@ cd frontend && npm install && npm run dev
 - `GET /api/inventory/low-stock` — Low stock alerts
 - `POST /api/inventory/product/{id}/restock` — Restock product
 
+## Comparison Tests
+
+The `comparison-tests/` directory contains a Python script that compares monolith and microservices API responses to verify data parity during migration. See [comparison-tests/README.md](comparison-tests/README.md) for details.
+
+```bash
+cd comparison-tests
+pip install -r requirements.txt
+python compare.py --monolith-url https://localhost:5001 --microservices-url http://localhost:8080
+```
+
 ## Seed Data
 
 - **Customers**: Acme Corp, Globex Inc, Initech LLC
