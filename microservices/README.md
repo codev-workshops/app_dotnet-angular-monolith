@@ -87,3 +87,7 @@ cd frontend && npm install && npm run dev
 - inventory-service → product-service (product name display)
 
 All inter-service calls use direct HTTP (RestTemplate) with service-to-service URLs.
+
+## Comparison Tests
+
+The `comparison-tests/` directory contains a Python script that compares API responses between the .NET monolith and the Java microservices to verify data parity during migration. See [comparison-tests/README.md](comparison-tests/README.md) for details.
