@@ -88,6 +88,39 @@ cd frontend && npm install && npm run dev
 
 All inter-service calls use direct HTTP (RestTemplate) with service-to-service URLs.
 
+## Frontend
+
+The `frontend/` directory contains a React SPA built with:
+
+- **React 18** + **Vite** + **TypeScript**
+- **React Router v6** for client-side routing
+- **React-Bootstrap** + Bootstrap 5 for UI components
+- **Axios** with JWT interceptors and automatic token refresh
+
+### Pages
+
+| Route | Page | Description |
+|---|---|---|
+| `/` | Login | Username/password authentication |
+| `/dashboard` | Dashboard | Summary cards (customers, products, orders, low-stock) |
+| `/orders` | Orders | Order table with create modal and inline status editing |
+| `/products` | Products | Product table with create modal |
+| `/customers` | Customers | Customer table with create modal |
+| `/inventory` | Inventory | Inventory table with low-stock highlighting and restock modal |
+| `/settings` | Settings | User management and role management tabs |
+| `/about` | About | Architecture description and tech stack info |
+
+### Development
+
+```bash
+cd microservices/frontend
+npm install
+npm run dev     # starts dev server on http://localhost:5173
+npm run build   # production build to dist/
+```
+
+The frontend connects to the API Gateway at `http://localhost:8080` by default. Override with the `VITE_API_URL` environment variable.
+
 ## Comparison Tests
 
 The `comparison-tests/` directory contains a Python script that compares API responses between the .NET monolith and the Java microservices to verify data parity during migration. See [comparison-tests/README.md](comparison-tests/README.md) for details.
