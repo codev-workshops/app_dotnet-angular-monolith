@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:order-service.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+server:
+  port: 8084
+
+jwt:
+  secret: ${JWT_SECRET:OrderManagerMicroservicesSharedJwtSecret2026!}
+
+services:
+  customer-url: ${CUSTOMER_SERVICE_URL:http://localhost:8082}
+  product-url: ${PRODUCT_SERVICE_URL:http://localhost:8083}
