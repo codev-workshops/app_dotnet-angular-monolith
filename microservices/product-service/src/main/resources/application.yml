@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:product-service.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+server:
+  port: 8083
+
+jwt:
+  secret: ${JWT_SECRET}
