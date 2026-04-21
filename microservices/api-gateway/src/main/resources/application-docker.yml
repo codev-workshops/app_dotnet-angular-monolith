@@ -1,0 +1,34 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: http://auth-service:8081
+          predicates:
+            - Path=/api/auth/**,/api/users/**,/api/roles/**
+          filters:
+            - PreserveHostHeader
+        - id: customer-service
+          uri: http://customer-service:8082
+          predicates:
+            - Path=/api/customers/**
+          filters:
+            - PreserveHostHeader
+        - id: product-service
+          uri: http://product-service:8083
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - PreserveHostHeader
+        - id: order-service
+          uri: http://order-service:8084
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - PreserveHostHeader
+        - id: inventory-service
+          uri: http://inventory-service:8085
+          predicates:
+            - Path=/api/inventory/**
+          filters:
+            - PreserveHostHeader
