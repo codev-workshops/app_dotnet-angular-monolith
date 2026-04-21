@@ -12,7 +12,7 @@ server:
   port: 8085
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:OrderManagerMicroservicesSharedJwtSecret2026!}
 
 services:
-  product-url: ${PRODUCT_SERVICE_URL}
+  product-url: ${PRODUCT_SERVICE_URL:http://localhost:8083}

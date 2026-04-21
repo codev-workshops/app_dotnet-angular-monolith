@@ -1,0 +1,7 @@
+**/target/
+**/.classpath
+**/.project
+**/.settings/
+**/*.db
+**/node_modules/
+**/dist/
