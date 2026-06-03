@@ -33,5 +33,5 @@ app.UseSwaggerUI();
 app.UseCors();
 app.UseStaticFiles();
 app.MapControllers();
-app.MapFallbackToFile("index.html");
+app.MapFallbackToFile("browser/index.html");
 app.Run();
