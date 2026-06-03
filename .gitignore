@@ -5,6 +5,8 @@ obj/
 .vs/
 node_modules/
 dist/
-.angular/
+.next/
+out/
+wwwroot/
 *.db
 appsettings.Development.json
