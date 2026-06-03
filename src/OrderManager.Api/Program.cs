@@ -31,6 +31,20 @@ using (var scope = app.Services.CreateScope())
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors();
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path.Value ?? "";
+    if (path != "/" && !Path.HasExtension(path))
+    {
+        var htmlFile = Path.Combine(app.Environment.WebRootPath ?? "", path.TrimStart('/').TrimEnd('/') + ".html");
+        if (File.Exists(htmlFile))
+        {
+            context.Request.Path = path.TrimEnd('/') + ".html";
+            context.SetEndpoint(null);
+        }
+    }
+    await next();
+});
 app.UseStaticFiles();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
