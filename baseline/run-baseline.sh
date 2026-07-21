@@ -34,6 +34,19 @@ fi
 
 ACTUAL="$(mktemp -d)"
 trap 'rm -rf "$ACTUAL"' EXIT
+
+# Obtain a JWT from the gateway's identity endpoint (if present) so authorized
+# endpoints can be reached. Ignored silently when the target has no /auth/token.
+if [ -z "${AUTH_TOKEN:-}" ]; then
+  tok="$(curl -s -X POST "$BASE/auth/token" -H 'Content-Type: application/json' \
+    -d '{"username":"baseline","password":"baseline"}' 2>/dev/null \
+    | jq -r '.token // empty' 2>/dev/null || true)"
+  if [ -n "$tok" ]; then
+    export AUTH_TOKEN="$tok"
+    echo "Acquired gateway JWT for capture"
+  fi
+fi
+
 echo "Capturing actual from $BASE"
 "$HERE/capture.sh" "$BASE" "$ACTUAL"
 

@@ -1,0 +1,67 @@
+# Boots the full decomposed stack: 4 services + YARP gateway.
+# Ports mirror the frozen local map (host:container). Inside the compose network
+# services address each other by service name.
+#
+#   docker compose -f services/docker-compose.yml up --build
+#   # gateway available at http://localhost:5100
+services:
+  customers:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args: { PROJECT: Customers/Customers.Api.csproj, DLL: Customers.Api.dll }
+    environment:
+      ASPNETCORE_URLS: http://+:5101
+      Services__Orders: http://orders:5104
+      Cors__AllowedOrigins: http://localhost:5100
+    ports: ["5101:5101"]
+
+  products:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args: { PROJECT: Products/Products.Api.csproj, DLL: Products.Api.dll }
+    environment:
+      ASPNETCORE_URLS: http://+:5102
+      Services__Inventory: http://inventory:5103
+      Cors__AllowedOrigins: http://localhost:5100
+    ports: ["5102:5102"]
+
+  inventory:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args: { PROJECT: Inventory/Inventory.Api.csproj, DLL: Inventory.Api.dll }
+    environment:
+      ASPNETCORE_URLS: http://+:5103
+      Services__Products: http://products:5102
+      Cors__AllowedOrigins: http://localhost:5100
+    ports: ["5103:5103"]
+
+  orders:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args: { PROJECT: Orders/Orders.Api.csproj, DLL: Orders.Api.dll }
+    environment:
+      ASPNETCORE_URLS: http://+:5104
+      Services__Customers: http://customers:5101
+      Services__Products: http://products:5102
+      Services__Inventory: http://inventory:5103
+      Cors__AllowedOrigins: http://localhost:5100
+    ports: ["5104:5104"]
+
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args: { PROJECT: Gateway/Gateway.csproj, DLL: Gateway.dll }
+    environment:
+      ASPNETCORE_URLS: http://+:5100
+      Cors__AllowedOrigins: http://localhost:4200,http://localhost:5100
+      ReverseProxy__Clusters__customers__Destinations__d1__Address: http://customers:5101
+      ReverseProxy__Clusters__products__Destinations__d1__Address: http://products:5102
+      ReverseProxy__Clusters__inventory__Destinations__d1__Address: http://inventory:5103
+      ReverseProxy__Clusters__orders__Destinations__d1__Address: http://orders:5104
+    ports: ["5100:5100"]
+    depends_on: [customers, products, inventory, orders]
