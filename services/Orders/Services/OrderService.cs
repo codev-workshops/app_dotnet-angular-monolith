@@ -48,9 +48,11 @@ public class OrderService
     // back to the Customers service).
     public async Task<List<OrderDto>> GetOrdersByCustomerAsync(int customerId)
     {
+        // Ascending Id order matches the monolith's unordered `.Include(c => c.Orders)`,
+        // which materializes in primary-key order.
         var orders = await _context.Orders
             .Where(o => o.CustomerId == customerId)
-            .OrderByDescending(o => o.OrderDate)
+            .OrderBy(o => o.Id)
             .ToListAsync();
 
         return orders.Select(o => new OrderDto
@@ -97,6 +99,10 @@ public class OrderService
                     UnitPrice = product.Price
                 });
             }
+
+            order.TotalAmount = order.Items.Sum(i => i.Quantity * i.UnitPrice);
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
         }
         catch
         {
@@ -107,10 +113,6 @@ public class OrderService
             }
             throw;
         }
-
-        order.TotalAmount = order.Items.Sum(i => i.Quantity * i.UnitPrice);
-        _context.Orders.Add(order);
-        await _context.SaveChangesAsync();
 
         return await ComposeReadAsync(order);
     }
