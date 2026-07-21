@@ -14,11 +14,27 @@ public static class AuthConstants
     public const string Issuer = "OrderManager.Gateway";
     public const string Audience = "OrderManager.Services";
 
-    // Dev-only fallback signing key (HS256 needs >= 256 bits). Override in
-    // production via configuration key "Jwt:Key".
-    public const string DevSigningKey = "orander-manager-dev-signing-key-change-me-please-32b+";
+    // The HS256 signing key is required and must be identical across the gateway
+    // (which signs) and every service (which validates). Provide it via the
+    // "Jwt:Key" configuration key / "Jwt__Key" environment variable. Fail fast
+    // rather than fall back to a shared secret baked into source.
+    public static string SigningKey(IConfiguration config) =>
+        config["Jwt:Key"] ?? throw new InvalidOperationException(
+            "Jwt:Key is not configured. Set the 'Jwt__Key' environment variable " +
+            "(a >= 256-bit secret shared by the gateway and all services).");
+}
 
-    public static string SigningKey(IConfiguration config) => config["Jwt:Key"] ?? DevSigningKey;
+// Validates login credentials against the configured user store ("Auth:Users"
+// as username -> password). Intended for the gateway's identity endpoint.
+public static class CredentialStore
+{
+    public static bool Validate(IConfiguration config, string username, string password)
+    {
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            return false;
+        var expected = config[$"Auth:Users:{username}"];
+        return expected is not null && expected == password;
+    }
 }
 
 public static class AuthExtensions

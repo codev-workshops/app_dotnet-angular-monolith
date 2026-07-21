@@ -16,6 +16,10 @@ if [ "${1:-}" = "--fresh" ]; then
   rm -f Customers/customers.db* Products/products.db* Inventory/inventory.db* Orders/orders.db*
 fi
 
+# Shared HS256 signing key for the gateway + all services (local dev default).
+# Override by exporting Jwt__Key before running. Every process must share it.
+export Jwt__Key="${Jwt__Key:-local-dev-jwt-signing-key-change-me-please-32bytes+}"
+
 mkdir -p .run/logs
 
 echo "Building solution"

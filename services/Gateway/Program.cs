@@ -23,13 +23,16 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Identity endpoint: issue a JWT for the demo. Any non-empty username is accepted
-// in this workshop build; wire to a real identity provider for production.
-app.MapPost("/auth/token", (TokenRequest req) =>
+// Identity endpoint: validate credentials against the configured user store
+// ("Auth:Users") and issue a JWT. Swap CredentialStore for a real identity
+// provider in production.
+app.MapPost("/auth/token", (TokenRequest req, IConfiguration config) =>
 {
-    if (string.IsNullOrWhiteSpace(req.Username))
-        return Results.BadRequest(new { message = "username required" });
-    var (token, expires) = JwtTokenFactory.Create(app.Configuration, req.Username);
+    if (string.IsNullOrWhiteSpace(req.Username) || string.IsNullOrWhiteSpace(req.Password))
+        return Results.BadRequest(new { message = "username and password required" });
+    if (!CredentialStore.Validate(config, req.Username, req.Password))
+        return Results.Json(new { message = "invalid credentials" }, statusCode: 401);
+    var (token, expires) = JwtTokenFactory.Create(config, req.Username);
     return Results.Ok(new TokenResponse(token, "Bearer", expires));
 });
 

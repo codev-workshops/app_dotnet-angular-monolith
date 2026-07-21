@@ -52,10 +52,16 @@ partially-populated, shape-changing success body.
 
 ## Auth
 
-The gateway issues JWTs at `POST /auth/token` and requires a valid bearer token
-on every proxied `/api/*` route; each service also validates the token
-(`AddAuthentication(JwtBearer)` + `[Authorize]`). CORS is restricted to the
-gateway/frontend origin instead of `AllowAnyOrigin`.
+The gateway issues JWTs at `POST /auth/token` after validating credentials
+against the configured user store (`Auth:Users`; dev defaults `demo`/`web`/`baseline`),
+and requires a valid bearer token on every proxied `/api/*` route; each service
+also validates the token (`AddAuthentication(JwtBearer)` + `[Authorize]`). CORS
+is restricted to the gateway/frontend origin instead of `AllowAnyOrigin`.
+
+The HS256 signing key is **required** — there is no in-source fallback. Provide
+the same key to the gateway and every service via `Jwt__Key` (env) / `Jwt:Key`
+(config); a missing key fails fast at startup. `run-all.sh` and `docker-compose.yml`
+set a shared local-dev key automatically (override by exporting `Jwt__Key` / `JWT_KEY`).
 
 ## Run locally
 
