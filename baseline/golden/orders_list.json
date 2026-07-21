@@ -1,0 +1,70 @@
+[
+  {
+    "id": 1,
+    "customerId": 1,
+    "customer": {
+      "id": 1,
+      "name": "Acme Corp",
+      "email": "orders@acme.com",
+      "phone": "555-0100",
+      "address": "123 Main St",
+      "city": "Springfield",
+      "state": "IL",
+      "zipCode": "62701",
+      "createdAt": "<TS>",
+      "orders": [
+        null
+      ]
+    },
+    "orderDate": "<TS>",
+    "status": "Pending",
+    "totalAmount": 49.97,
+    "shippingAddress": "123 Main St, Springfield, IL 62701",
+    "items": [
+      {
+        "id": 1,
+        "orderId": 1,
+        "order": null,
+        "productId": 1,
+        "product": {
+          "id": 1,
+          "name": "Widget A",
+          "description": "Standard widget",
+          "category": "Widgets",
+          "price": 9.99,
+          "sku": "WGT-001",
+          "createdAt": "<TS>",
+          "inventory": null,
+          "orderItems": [
+            null
+          ]
+        },
+        "quantity": 2,
+        "unitPrice": 9.99,
+        "lineTotal": 19.98
+      },
+      {
+        "id": 2,
+        "orderId": 1,
+        "order": null,
+        "productId": 3,
+        "product": {
+          "id": 3,
+          "name": "Gadget X",
+          "description": "Basic gadget",
+          "category": "Gadgets",
+          "price": 29.99,
+          "sku": "GDG-001",
+          "createdAt": "<TS>",
+          "inventory": null,
+          "orderItems": [
+            null
+          ]
+        },
+        "quantity": 1,
+        "unitPrice": 29.99,
+        "lineTotal": 29.99
+      }
+    ]
+  }
+]

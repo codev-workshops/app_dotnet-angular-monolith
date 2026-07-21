@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Acme Corp",
+    "email": "orders@acme.com",
+    "phone": "555-0100",
+    "address": "123 Main St",
+    "city": "Springfield",
+    "state": "IL",
+    "zipCode": "62701",
+    "createdAt": "<TS>",
+    "orders": []
+  },
+  {
+    "id": 2,
+    "name": "Globex Inc",
+    "email": "purchasing@globex.com",
+    "phone": "555-0200",
+    "address": "456 Oak Ave",
+    "city": "Shelbyville",
+    "state": "IL",
+    "zipCode": "62565",
+    "createdAt": "<TS>",
+    "orders": []
+  },
+  {
+    "id": 3,
+    "name": "Initech LLC",
+    "email": "supplies@initech.com",
+    "phone": "555-0300",
+    "address": "789 Pine Rd",
+    "city": "Capital City",
+    "state": "IL",
+    "zipCode": "62702",
+    "createdAt": "<TS>",
+    "orders": []
+  }
+]

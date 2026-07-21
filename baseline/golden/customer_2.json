@@ -1,0 +1,12 @@
+{
+  "id": 2,
+  "name": "Globex Inc",
+  "email": "purchasing@globex.com",
+  "phone": "555-0200",
+  "address": "456 Oak Ave",
+  "city": "Shelbyville",
+  "state": "IL",
+  "zipCode": "62565",
+  "createdAt": "<TS>",
+  "orders": []
+}

@@ -1,0 +1,23 @@
+{
+  "id": 1,
+  "name": "Acme Corp",
+  "email": "orders@acme.com",
+  "phone": "555-0100",
+  "address": "123 Main St",
+  "city": "Springfield",
+  "state": "IL",
+  "zipCode": "62701",
+  "createdAt": "<TS>",
+  "orders": [
+    {
+      "id": 1,
+      "customerId": 1,
+      "customer": null,
+      "orderDate": "<TS>",
+      "status": "Pending",
+      "totalAmount": 49.97,
+      "shippingAddress": "123 Main St, Springfield, IL 62701",
+      "items": []
+    }
+  ]
+}
